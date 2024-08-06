@@ -17,7 +17,7 @@ class Student:
         self.names = names
         self.courses_registered = []
         self.GPA = 0.0
-
+student = next((s for s in self.student_list if s.email == student_email), None)
     def register_for_course(self, course, grade):
         """
         Register the student for a course.
