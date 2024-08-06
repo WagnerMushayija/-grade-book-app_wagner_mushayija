@@ -1,6 +1,7 @@
 import csv
 from gradebk import GradeBook
 
+
 class Student:
     """
     A class to represent a student.
@@ -45,7 +46,6 @@ student = next((s for s in self.student_list if s.email == student_email), None)
         return self.GPA
 
 
-
 class Course:
     def __init__(self, name, trimester, credits):
         """
@@ -73,7 +73,8 @@ def main_menu():
         "6": "Search Students by GPA Range",
         "7": "Generate Transcripts",
         "8": "Display Students",
-        "9": "Exit"
+        "9": "Display Courses",
+        "10": "Exit"
     }
 
     while True:
@@ -84,7 +85,7 @@ def main_menu():
             print(f"{key}. {value}")
         print("=" * 50)
 
-        choice = input("Please select an option (1-8): ")
+        choice = input("Please select an option (1-10): ")
 
         if choice == "1":
             email = input("Enter student's email: ")
@@ -112,12 +113,20 @@ def main_menu():
         elif choice == "6":
             min_gpa = float(input("Enter minimum GPA: "))
             max_gpa = float(input("Enter maximum GPA: "))
-            gradebook.search_by_grade(min_gpa, max_gpa)
+            filtered_students = gradebook.search_by_grade(min_gpa, max_gpa)
+            print("\n Filtered Students:")
+            if filtered_students:
+                for student in filtered_students:
+                    print(f"Name: {student.names}, Email: {student.email}, GPA: {student.GPA}")
+            else:
+                print("No students found with GPA in the specified range.")
         elif choice == "7":
             gradebook.generate_transcript()
         elif choice == "8":
             gradebook.display_students()
         elif choice == "9":
+            gradebook.display_courses()
+        elif choice == "10":
             print("Exiting the GradeBook application. Goodbye!")
             break
         else:
@@ -129,4 +138,3 @@ gradebook = GradeBook()
 
 # Run the main menu
 main_menu()
-

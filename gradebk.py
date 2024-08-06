@@ -1,6 +1,7 @@
 from models import Student, Course
 import csv
 
+
 class GradeBook:
     def __init__(self, csv_file='students.csv'):
         """
@@ -38,6 +39,14 @@ class GradeBook:
         new_course = Course(name, trimester, credits)
         self.course_list.append(new_course)
         print(f"Course {name} added successfully.")
+
+    def display_courses(self):
+        if not self.course_list:
+            print("No courses available.")
+        else:
+            print("\nList of Courses:")
+            for course in self.course_list:
+                print(f"Course Name: {course.name}, Trimester: {course.trimester}, Credits: {course.credits}")
 
     def register_student_for_course(self, student_email, course_name, grade):
         """
@@ -99,18 +108,34 @@ class GradeBook:
         for index, student in enumerate(sorted_students, start=1):
             print(f"{index}. {student.email} - GPA: {student.GPA}")
 
-    def search_by_grade(self, min_grade, max_grade):
+    def search_by_grade(self, min_gpa, max_gpa):
         """
         Search for students whose GPA falls within the specified grade range.
 
-        :param min_grade: The minimum GPA.
-        :param max_grade: The maximum GPA.
+        :param min_gpa: The minimum GPA.
+        :param max_gpa: The maximum GPA.
         :return: A list of students whose GPA is within the specified range.
         """
+        # Debug: Show all students and their GPAs
+        print("All students and their GPAs:")
+        for student in self.student_list:
+            print(f"Name: {student.names}, GPA: {student.GPA}")
+
         filtered_students = [
             student for student in self.student_list
-            if min_grade <= student.GPA <= max_grade
+            if min_gpa <= student.GPA <= max_gpa
         ]
+        return filtered_students
+
+        # Debug: Show filtered students
+
+        print("Filtered students:")
+        if filtered_students:
+            for student in filtered_students:
+                print(f"Name: {student.names}, GPA: {student.GPA}")
+        else:
+            print("No students found with GPA in the specified range.")
+
         return filtered_students
 
     def generate_transcript(self):
